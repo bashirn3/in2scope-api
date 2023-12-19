@@ -12,3 +12,6 @@ __pycache__/
 
 # Ignore init_db.py file
 init_db.py
+
+# Virtual environment
+my_env/
