@@ -1,0 +1,14 @@
+# .gitignore
+
+# Ignore .env file
+.env
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+
+# Ignore init_db.py file
+init_db.py
