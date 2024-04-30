@@ -23,9 +23,6 @@ load_dotenv()
 # Google Maps API key
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 
-# Initialize Google Maps API client
-gmaps = googlemaps.Client(key= GOOGLE_MAPS_API_KEY )
-
 
 # Establish a connection to the PostgreSQL database
 # "dpg-cm0k1ei1hbls73dbibjg-a.oregon-postgres.render.com
