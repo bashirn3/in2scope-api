@@ -32,7 +32,7 @@ gmaps = googlemaps.Client(key= GOOGLE_MAPS_API_KEY )
 # "dpg-cm0k1ei1hbls73dbibjg-a.oregon-postgres.render.com
 conn = psycopg2.connect(
     host="dpg-conr3u21hbls73fp2h10-a.oregon-postgres.render.com",
-    database="in2scope2",
+    database="in2scope2_itk7",
     user=os.getenv('DB_USERNAME'),
     password=os.getenv('DB_PASSWORD')
 )
