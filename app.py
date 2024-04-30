@@ -4,11 +4,15 @@ import psycopg2
 from psycopg2 import extras  # Import DictCursor
 import requests
 import csv
-from io import StringIO, BytesIO
-import json
+from io import StringIO
 import concurrent.futures
 from flask_cors import CORS
+import googlemaps
+
+
 from dotenv import load_dotenv
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -20,9 +24,14 @@ load_dotenv()
 # Google Maps API key
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 
+# Initialize Google Maps API client
+gmaps = googlemaps.Client(key= GOOGLE_MAPS_API_KEY )
+
+
 # Establish a connection to the PostgreSQL database
+# "dpg-cm0k1ei1hbls73dbibjg-a.oregon-postgres.render.com
 conn = psycopg2.connect(
-    host="dpg-cm0k1ei1hbls73dbibjg-a.oregon-postgres.render.com",
+    host="dpg-conr3u21hbls73fp2h10-a.oregon-postgres.render.com",
     database="in2scope2",
     user=os.getenv('DB_USERNAME'),
     password=os.getenv('DB_PASSWORD')
@@ -214,34 +223,52 @@ def get_travel_time(origin_postcode, destination_postcode, mode_of_transport):
         # Handle invalid response or missing data
         return float('inf')  # Return infinity for an invalid travel time
 
-
-# def filter_schools(schools, candidate_postcode, max_travel_time, mode_of_transport):
-#     filtered_schools = []
-
-#     for school in schools:
-#         # Get travel time from Google Maps Distance Matrix API
-#         travel_time = get_travel_time(candidate_postcode, school["postcode"], mode_of_transport)
-
-#         max_travel_time = float(max_travel_time)
-
-#         # Check if the school is within the specified max travel time
-#         if travel_time <= max_travel_time:
-#             filtered_schools.append({
-#                 'schoolname': school["schoolname"],
-#                 'postcode': school["postcode"],
-#                 'address': school["address"],
-#                 'latitude': school["latitude"],
-#                 'longitude': school["longitude"],
-#                 'website': school["website"],
-#                 'borough': school["borough"],
-#                 'travel_time': travel_time
-#             })
+# def get_travel_time(origin, destinations, mode_of_transport):
+#     # Check cache first
+#     cache_key = (origin, tuple(destinations), mode_of_transport)
+  
+ 
+#     if cache_key in travel_time_cache:
+#         return travel_time_cache[cache_key]
+    
 
 
-#     # Sort schools based on travel time
-#     filtered_schools.sort(key=lambda x: x['travel_time'])
+#     # Call Google Maps Distance Matrix API for batch processing
+#     matrix = gmaps.distance_matrix(origin, destinations, mode=mode_of_transport)
 
-#     return filtered_schools
+
+#     # Parse results and extract travel time
+#     travel_times = []
+#     for element in matrix['rows'][0]['elements']:
+#         if 'duration' in element:
+#             travel_times.append(element['duration']['value'])
+#         else:
+#             # Handle cases where travel time couldn't be calculated
+#             travel_times.append(float('inf'))
+
+#     # Update cache
+#     travel_time_cache[cache_key] = travel_times
+
+   
+#     return travel_times
+
+# def get_travel_time(origin, destinations, mode_of_transport):
+#     # Call Google Maps Distance Matrix API for batch processing
+#     matrix = gmaps.distance_matrix(origin, destinations, mode=mode_of_transport)
+
+#     # Parse results and extract travel time
+#     travel_times = []
+#     for element in matrix['rows'][0]['elements']:
+#         if 'duration' in element:
+#             travel_times.append(element['duration']['value'])
+#         else:
+#             # Handle cases where travel time couldn't be calculated
+#             travel_times.append(float('inf'))
+
+#     return travel_times
+
+
+
 
 
 
@@ -279,6 +306,8 @@ def filter_schools_parallel(schools, candidate_postcode, max_travel_time, mode_o
     return filtered_schools
 
 
+
+
 def filter_schools2(schools, candidate_postcode, max_travel_time, mode_of_transport):
     filtered_schools=[]
     for school in schools:
@@ -313,20 +342,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-
-
-    #  for csv_row in csv_reader:
-    #     # Validate CSV row
-    #     validate_postcode(csv_row['postcode'])
-
-    #     # Retrieve schools from the CSV row
-    #     school = {
-    #         'postcode': csv_row['postcode'],
-    #         'schoolname': csv_row['Name'],  # Adjust as needed based on CSV columns
-    #         'address': csv_row.get('Address', ''),  # Adjust based on your CSV columns
-    #         'latitude': csv_row.get('Latitude', 0),  # Adjust based on your CSV columns
-    #         'longitude': csv_row.get('Longitude', 0),  # Adjust based on your CSV columns
-    #         'website': csv_row.get('Website', ''),  # Adjust based on your CSV columns
-    #         'borough': csv_row.get('Borough', '')  # Adjust based on your CSV columns
-    #     }
 
