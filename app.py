@@ -27,7 +27,7 @@ GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 # Establish a connection to the PostgreSQL database
 # "dpg-cm0k1ei1hbls73dbibjg-a.oregon-postgres.render.com
 conn = psycopg2.connect(
-    host="postgres://in2scopeuser:1dUd7javDFVD6QJ6YhMRsqRihgnzvvhR@dpg-conr3u21hbls73fp2h10-a.oregon-postgres.render.com/in2scope2_itk7?ssl=true",
+    host="dpg-conr3u21hbls73fp2h10-a.oregon-postgres.render.com",
     database="in2scope2_itk7",
     user=os.getenv('DB_USERNAME'),
     password=os.getenv('DB_PASSWORD')
