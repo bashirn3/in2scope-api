@@ -7,7 +7,6 @@ import csv
 from io import StringIO
 import concurrent.futures
 from flask_cors import CORS
-import googlemaps
 
 
 from dotenv import load_dotenv
