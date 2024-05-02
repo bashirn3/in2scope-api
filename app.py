@@ -29,8 +29,8 @@ GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 conn = psycopg2.connect(
     host="dpg-conr3u21hbls73fp2h10-a.oregon-postgres.render.com",
     database="in2scope2_itk7",
-    user=os.getenv('DB_USERNAME'),
-    password=os.getenv('DB_PASSWORD')
+    user="in2scopeuser",
+    password="1dUd7javDFVD6QJ6YhMRsqRihgnzvvhR"
 )
 
 # Open a cursor to perform database operations
@@ -335,7 +335,7 @@ def filter_schools2(schools, candidate_postcode, max_travel_time, mode_of_transp
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0',port=os.getenv('PORT'))
+    app.run(debug=True,host='0.0.0.0')
 
 
 
