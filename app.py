@@ -19,7 +19,7 @@ CORS(app)
 load_dotenv()
 
 # Google Maps API key
-GOOGLE_MAPS_API_KEY = "AIzaSyCXe_or92ZvVfjUGcb5q3CrkUlFfp2FAOY"
+GOOGLE_MAPS_API_KEY =  os.environ.get('GOOGLE_MAPS_API_KEY')
 
 
 
