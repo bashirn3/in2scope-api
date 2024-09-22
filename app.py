@@ -37,7 +37,7 @@ cur = conn.cursor(cursor_factory=extras.DictCursor)
 
 @app.route('/health')
 def health_check():
-    return "The app is working correctly"
+    return "The app is working correctly "
 
 
 @app.route('/find_schools', methods=['POST'])
